@@ -62,7 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\DrawLine.cs" />
+    <Compile Include="Assets\Scripts\DrawShape.cs" />
     <Compile Include="Assets\Scripts\Family_Tree.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Reference Include="Unity.Timeline.Editor">
