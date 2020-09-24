@@ -34,7 +34,6 @@ public class DrawShape : MonoBehaviour
         type = "rect";
         readyToDraw = false;
         editMode = false;
-        editButton.GetComponent<Text>().text = "Press to Draw Shapes";
     }
 
     // Update is called once per frame
@@ -135,7 +134,7 @@ public class DrawShape : MonoBehaviour
     public void ChangeLineType()
     {
         straightLinesMode = !straightLinesMode;
-        Destroy(currentLine);
+        DestroyShape();
     }
 
     public void ChangeType(string typeName)
@@ -146,7 +145,21 @@ public class DrawShape : MonoBehaviour
                 Destroy(currentLine);
                 break;
         }
+
         type = typeName;
+    }
+
+    public void DestroyShape()
+    {
+        switch (type)
+        {
+            case "line":
+                Destroy(currentLine);
+                break;
+            case "rect":
+                Destroy(currentRectCanvas);
+                break;
+        }
     }
 
     public void DrawMode()
@@ -156,7 +169,7 @@ public class DrawShape : MonoBehaviour
 
     public void EditMode()
     {
-        if(editButton.GetComponentInChildren<Text>().text == "Press to Edit Boxes")
+        if (editButton.GetComponentInChildren<Text>().text == "Press to Edit Boxes")
         {
             editButton.GetComponentInChildren<Text>().text = "Press to Draw Shapes";
         }
@@ -164,6 +177,7 @@ public class DrawShape : MonoBehaviour
         {
             editButton.GetComponentInChildren<Text>().text = "Press to Edit Boxes";
         }
+
         editMode = !editMode;
     }
 }

@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\DrawShape.cs" />
     <Compile Include="Assets\Scripts\Family_Tree.cs" />
+    <Compile Include="Assets\Scripts\MoveCamera.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/Unity/FamilyTree/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
