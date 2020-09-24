@@ -1225,6 +1225,7 @@ MonoBehaviour:
   edgeCollider: {fileID: 0}
   mousePositionList: []
   mousePosition: {x: 0, y: 0}
+  inputFields: []
   straightLinesMode: 0
   readyToDraw: 0
   editMode: 0

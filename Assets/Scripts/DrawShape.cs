@@ -20,7 +20,9 @@ public class DrawShape : MonoBehaviour
     public List<Vector2> mousePositionList;
 
     public Vector2 mousePosition;
-    
+
+    public List<InputField> inputFields;
+
     public bool straightLinesMode;
     public bool readyToDraw;
     public bool editMode;
@@ -54,6 +56,8 @@ public class DrawShape : MonoBehaviour
                             currentRectCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
                             currentRectCanvas.transform.GetChild(0).position = tempMousePositionRect;
                             currentRectCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+
+                            inputFields.Add(currentRectCanvas.GetComponentInChildren<InputField>());
 
                             readyToDraw = !readyToDraw;
                         }
@@ -180,5 +184,20 @@ public class DrawShape : MonoBehaviour
         }
 
         editMode = !editMode;
+
+        if (editMode)
+        {
+            foreach(InputField inputField in inputFields)
+            {
+                inputField.interactable = false;
+            }
+        }
+        else
+        {
+            foreach (InputField inputField in inputFields)
+            {
+                inputField.interactable = true;
+            }
+        }
     }
 }
