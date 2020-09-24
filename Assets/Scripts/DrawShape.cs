@@ -7,6 +7,7 @@ public class DrawShape : MonoBehaviour
 {
     public GameObject linePrefab;
     public GameObject rectPrefab;
+    public GameObject ballPrefab;
 
     public GameObject currentLine;
     public GameObject currentRectCanvas;
@@ -23,19 +24,24 @@ public class DrawShape : MonoBehaviour
 
     public List<InputField> inputFields;
 
+    public List<GameObject> objectsToSave { get; set; } = new List<GameObject>();
+
+    public Text lineModeText;
+
     public bool straightLinesMode;
     public bool readyToDraw;
     public bool editMode;
 
     public string type;
-
     // Start is called before the first frame update
     void Start()
     {
         straightLinesMode = false;
+        lineModeText.GetComponent<Text>().enabled = false;
         type = "rect";
         readyToDraw = false;
         editMode = false;
+        FamilyTree.SaveInitiated += Save;
     }
 
     // Update is called once per frame
@@ -52,10 +58,13 @@ public class DrawShape : MonoBehaviour
                         {
                             Vector2 tempMousePositionRect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                             currentRectCanvas = Instantiate(rectPrefab, tempMousePositionRect, Quaternion.identity);
+                            objectsToSave.Add(currentRectCanvas);
 
                             currentRectCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
                             currentRectCanvas.transform.GetChild(0).position = tempMousePositionRect;
                             currentRectCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+                            currentRectCanvas.GetComponentInChildren<InputField>().interactable = false;
+                            edgeCollider = currentRectCanvas.GetComponentInChildren<EdgeCollider2D>();
 
                             inputFields.Add(currentRectCanvas.GetComponentInChildren<InputField>());
 
@@ -91,17 +100,28 @@ public class DrawShape : MonoBehaviour
                         if (Input.GetMouseButtonDown(0))
                         {
                             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+                            objectsToSave.Add(currentLine);
                             lineRenderer = currentLine.GetComponent<LineRenderer>();
                             edgeCollider = currentLine.GetComponent<EdgeCollider2D>();
+
+                            mousePositionList.Clear();
+                            mousePositionList.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
                             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                             lineRenderer.SetPosition(0, mousePosition);
                             lineRenderer.SetPosition(1, mousePosition);
+
+                            edgeCollider.points = mousePositionList.ToArray();
                         }
                         else if (Input.GetMouseButton(0))
                         {
                             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                             lineRenderer.SetPosition(1, mousePosition);
+                            
+                        }else if (Input.GetMouseButtonUp(0))
+                        {
+                            mousePositionList.Add(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                            edgeCollider.points = mousePositionList.ToArray();
                         }
                     }
 
@@ -115,9 +135,15 @@ public class DrawShape : MonoBehaviour
         }
     }
 
+    public void CreateBall()
+    {
+        Instantiate(ballPrefab, new Vector3(0.0f, 4.4f, 2.5f), Quaternion.identity);
+    }
+
     void CreateLine()
     {
         currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
+        objectsToSave.Add(currentLine);
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider = currentLine.GetComponent<EdgeCollider2D>();
         mousePositionList.Clear();
@@ -138,6 +164,7 @@ public class DrawShape : MonoBehaviour
 
     public void ChangeLineType()
     {
+        lineModeText.GetComponent<Text>().enabled = !lineModeText.GetComponent<Text>().enabled;
         straightLinesMode = !straightLinesMode;
         DestroyShape();
     }
@@ -198,6 +225,27 @@ public class DrawShape : MonoBehaviour
             {
                 inputField.interactable = true;
             }
+        }
+    }
+
+    public void AddItemsToList(List<GameObject> gameObjects)
+    {
+        foreach(GameObject myGameObject in gameObjects)
+        {
+            objectsToSave.Add(myGameObject.gameObject);
+        }
+    }
+
+    public void Save()
+    {
+        SaveLoad.Save<List<GameObject>>(objectsToSave, "Shapes");
+    }
+
+    public void Load()
+    {
+        if (SaveLoad.SaveExists("Shapes"))
+        {
+            AddItemsToList(SaveLoad.Load<List<GameObject>>("Shapes"));
         }
     }
 }
