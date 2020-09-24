@@ -20,7 +20,7 @@ public class DrawShape : MonoBehaviour
     public List<Vector2> mousePositionList;
 
     public Vector2 mousePosition;
-
+    
     public bool straightLinesMode;
     public bool readyToDraw;
     public bool editMode;
@@ -49,10 +49,11 @@ public class DrawShape : MonoBehaviour
                         if (Input.GetMouseButtonDown(0))
                         {
                             Vector2 tempMousePositionRect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            currentRectCanvas = Instantiate(rectPrefab, tempMousePositionRect, Quaternion.identity, mainObject.transform);
+                            currentRectCanvas = Instantiate(rectPrefab, tempMousePositionRect, Quaternion.identity);
 
                             currentRectCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
                             currentRectCanvas.transform.GetChild(0).position = tempMousePositionRect;
+                            currentRectCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
 
                             readyToDraw = !readyToDraw;
                         }
