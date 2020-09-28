@@ -16,6 +16,11 @@ public class MainController : MonoBehaviour
         
     }
 
+    public void QuitApp()
+    {
+        Application.Quit();
+    }
+
     public void Save()
     {
         FamilyTree.OnSaveInitiated();
