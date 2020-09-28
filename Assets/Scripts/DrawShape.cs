@@ -25,7 +25,8 @@ public class DrawShape : MonoBehaviour
     public Vector2 mousePosition;
 
     public List<InputField> inputFields;
-    public List<GameObject> objectsToSave { get; set; } = new List<GameObject>();
+    private List<GameObject> objectsToSave = new List<GameObject>();
+    private List<string> finalString = new List<string>();
 
     public Text lineModeText;
 
@@ -59,16 +60,13 @@ public class DrawShape : MonoBehaviour
                         {
                             Vector2 tempMousePositionRect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                             currentNodeCanvas = Instantiate(nodeButtonPrefab, tempMousePositionRect, Quaternion.identity);
-                            objectsToSave.Add(currentNodeCanvas);
 
                             currentNodeCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
                             currentNodeCanvas.transform.GetChild(0).position = tempMousePositionRect;
                             currentNodeCanvas.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-                            //currentNodeButton.GetComponentInChildren<InputField>().interactable = false;
                             edgeCollider = currentNodeCanvas.GetComponentInChildren<EdgeCollider2D>();
 
-                            //inputFields.Add(currentNodeButton.GetComponentInChildren<InputField>());
-
+                            objectsToSave.Add(currentNodeCanvas);
                             readyToDraw = !readyToDraw;
                         }
                     }
@@ -76,6 +74,7 @@ public class DrawShape : MonoBehaviour
                     if (Input.GetMouseButtonDown(1))
                     {
                         Destroy(currentNodeCanvas);
+                        objectsToSave.RemoveAt(objectsToSave.Count - 1);
                     }
                     break;
 
@@ -86,7 +85,7 @@ public class DrawShape : MonoBehaviour
                         {
                             Vector2 tempMousePositionRect = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                             currentRectCanvas = Instantiate(rectPrefab, tempMousePositionRect, Quaternion.identity);
-                            objectsToSave.Add(currentRectCanvas);
+                            //objectsToSave.Add(currentRectCanvas);
 
                             currentRectCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
                             currentRectCanvas.transform.GetChild(0).position = tempMousePositionRect;
@@ -129,7 +128,7 @@ public class DrawShape : MonoBehaviour
                         if (Input.GetMouseButtonDown(0))
                         {
                             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
-                            objectsToSave.Add(currentLine);
+                            //objectsToSave.Add(currentLine);
                             lineRenderer = currentLine.GetComponent<LineRenderer>();
                             edgeCollider = currentLine.GetComponent<EdgeCollider2D>();
 
@@ -173,7 +172,7 @@ public class DrawShape : MonoBehaviour
     void CreateLine()
     {
         currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity);
-        objectsToSave.Add(currentLine);
+        //objectsToSave.Add(currentLine);
         lineRenderer = currentLine.GetComponent<LineRenderer>();
         edgeCollider = currentLine.GetComponent<EdgeCollider2D>();
         mousePositionList.Clear();
@@ -265,20 +264,27 @@ public class DrawShape : MonoBehaviour
     {
         foreach (GameObject myGameObject in gameObjects)
         {
-            objectsToSave.Add(myGameObject.gameObject);
+            //objectsToSave.Add(myGameObject.gameObject);
         }
     }
 
     public void Save()
     {
-        SaveLoad.Save<List<GameObject>>(objectsToSave, "Shapes");
+        foreach(GameObject gameObjectfromList in objectsToSave)
+        {
+            gameObjectfromList.transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).GetComponent<Node>().AddItemsToSave();
+            finalString.Add(gameObjectfromList.transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).GetComponent<Node>().nodeToSave.stringToSave);
+        }
+        SaveLoad.Save<string>(string.Join("\n-------------\n",finalString), "FamilyTree");
     }
 
     public void Load()
     {
+        /*
         if (SaveLoad.SaveExists("Shapes"))
         {
             AddItemsToList(SaveLoad.Load<List<GameObject>>("Shapes"));
         }
+        */
     }
 }

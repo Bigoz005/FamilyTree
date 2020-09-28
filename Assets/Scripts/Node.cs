@@ -22,6 +22,13 @@ public class Node : MonoBehaviour
     public List<string> siblings = new List<string>();
     public List<string> children = new List<string>();
 
+    public SingleNode nodeToSave = new SingleNode();
+
+    private void Awake()
+    {
+        FamilyTree.SaveInitiated += Save;
+    }
+
     public void AddName(InputField inputField)
     {
         first_Name = inputField.text;
@@ -186,4 +193,50 @@ public class Node : MonoBehaviour
             }
         }
     }
+
+    public void AddItemsToList(List<string> strings)
+    {
+        foreach (string mystring in strings)
+        {
+            
+        }
+    }
+
+    public void AddItemsToSave()
+    {
+        nodeToSave.first_Name = first_Name;
+        nodeToSave.surname = surname;
+        nodeToSave.date = date;
+        nodeToSave.spouse = spouse;
+
+        nodeToSave.parents = parents;
+        nodeToSave.siblings = siblings;
+        nodeToSave.ex_spouse = ex_spouse;
+        nodeToSave.children = children;
+
+        nodeToSave.stringToSave = "*Name: " + first_Name + " *Surname: " + surname + " *Date: " + date + " *Parents: " + string.Join(", ", parents) + " *Siblings: " + string.Join(",", siblings) + " *Spouse: " + spouse + " *Ex_spouse: " + string.Join(",", ex_spouse) + " *Children: " + string.Join(",", children);
+    }
+
+    public void Save()
+    {
+        AddItemsToSave();
+        SaveLoad.Save<string>(nodeToSave.first_Name , "Name");
+        SaveLoad.Save<string>(nodeToSave.surname , "Surname");
+        SaveLoad.Save<string>(nodeToSave.date , "Date");
+        SaveLoad.Save<List<string>>(nodeToSave.parents , "Parents");
+        SaveLoad.Save<List<string>>(nodeToSave.siblings , "Sibling");
+        SaveLoad.Save<string>(nodeToSave.spouse , "Spouse");
+        SaveLoad.Save<List<string>>(nodeToSave.ex_spouse , "EXSpouse");
+        SaveLoad.Save<List<string>>(nodeToSave.children , "Children");
+        SaveLoad.Save<string>(nodeToSave.stringToSave, "LastProcessedTreeNode");
+    }
+
+    public void Load()
+    {
+        if (SaveLoad.SaveExists("Shapes"))
+        {
+            AddItemsToList(SaveLoad.Load<List<string>>("Nodes"));
+        }
+    }
 }
+

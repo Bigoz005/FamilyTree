@@ -6,11 +6,11 @@ public class NodeButton : MonoBehaviour
 {
     public void OpenPanel()
     {
-        transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void ClosePanel()
     {
-        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
     }
 }

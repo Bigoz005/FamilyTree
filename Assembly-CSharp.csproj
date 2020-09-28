@@ -69,7 +69,9 @@
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\NodeButton.cs" />
     <Compile Include="Assets\Scripts\SaveLoad.cs" />
+    <Compile Include="Assets\Scripts\SingleNode.cs" />
     <Compile Include="Assets\Scripts\UniqueID.cs" />
+    <None Include="Assets\Saves\FamilyTree.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/micha/Desktop/FamilyTreeRep/FamilyTree/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

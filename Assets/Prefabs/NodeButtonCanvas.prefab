@@ -58,7 +58,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &3407936755678321162
 MonoBehaviour:
@@ -99,6 +99,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!68 &415180575
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863907123245002982}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -78.420555, y: -16.169287}
+  - {x: -78.37784, y: 15.24665}
+  - {x: -77.1285, y: 13.236156}
+  - {x: -1.4676762, y: 14.514151}
+  - {x: 77.11331, y: 13.483942}
+  - {x: 78.83201, y: 12.311867}
+  - {x: 78.57455, y: -15.091333}
 --- !u!1001 &3407936756038486912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,8 +239,24 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5772940121638557464, guid: 6140076dbb63e79489447a4e4389360c,
+        type: 3}
+      propertyPath: m_OverrideSorting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772940121638557464, guid: 6140076dbb63e79489447a4e4389360c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6140076dbb63e79489447a4e4389360c, type: 3}
+--- !u!1 &7863907123245002982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4785454697194814310, guid: 6140076dbb63e79489447a4e4389360c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3407936756038486912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7863907123245002977 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4785454697194814305, guid: 6140076dbb63e79489447a4e4389360c,

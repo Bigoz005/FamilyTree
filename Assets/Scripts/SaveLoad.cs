@@ -9,7 +9,7 @@ public class SaveLoad : MonoBehaviour
 {
     public static void Save<T>(T objectToSave, string key)
     {
-        string path = Application.persistentDataPath + "/saves/";
+        string path = Application.dataPath + "/Saves/";
         Directory.CreateDirectory(path);
         
         BinaryFormatter formatter = new BinaryFormatter();
@@ -17,12 +17,11 @@ public class SaveLoad : MonoBehaviour
         {
             formatter.Serialize(fileStream, objectToSave);
         }
-        Debug.Log("Saved");
     }
 
     public static T Load<T>(string key)
     {
-        string path = Application.persistentDataPath + "/saves/";
+        string path = Application.dataPath + "/Saves/";
         Directory.CreateDirectory(path);
         BinaryFormatter formatter = new BinaryFormatter();
         T returnValue = default(T);
@@ -35,13 +34,13 @@ public class SaveLoad : MonoBehaviour
 
     public static bool SaveExists(string key)
     {
-        string path = Application.persistentDataPath + "/saves/" + key + ".txt";
+        string path = Application.dataPath + "/Saves/" + key + ".txt";
         return File.Exists(path);
     }
 
     public static void DeleteAllSaveFiles()
     {
-        string path = Application.persistentDataPath + "/saves/";
+        string path = Application.dataPath + "/Saves/";
         DirectoryInfo directory = new DirectoryInfo(path);
         directory.Delete();
         Directory.CreateDirectory(path);
