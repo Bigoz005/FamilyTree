@@ -11,3 +11,11 @@ An attempt to create an application for creating a family tree by filling in for
 
 You can add interactive nodes on the desktop where you can enter and complete data about a family member.
 Nodes can be connected using drawn lines (straight or any shape) on the application desktop.
+
+
+https://github.com/Bigoz005/FamilyTree/assets/32684265/5d070acf-ff33-40d7-bc35-23e07f3cc45e
+
+
+
+https://github.com/Bigoz005/FamilyTree/assets/32684265/b76073f6-7115-4333-8fb1-5b23921ef1e3
+
